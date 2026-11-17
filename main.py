@@ -1,6 +1,7 @@
-import asyncio
+import textwrap
 from pathlib import Path
 import pygame
+from pygame import mixer
 
 WIDTH, HEIGHT = 1275, 725
 
@@ -21,27 +22,41 @@ class TextAdventure:
     def write(self, message=""):
         self.messages.append(str(message))
 
+    pygame.mixer.init()
+
     ASSETS = Path(__file__).parent / "assets"
 
-    def load_sound(self, filename):
-        if not pygame.mixer.get_init():
-            return None
-        path = self.ASSETS / filename
-        for candidate in (path.with_suffix(".ogg"), path, path.with_suffix(".wav")):
-            if candidate.is_file():
-                try:
-                    return pygame.mixer.Sound(str(candidate))
-                except pygame.error as error:
-                    print(f"Could not load {candidate.name}: {error}")
-        return None
+    background_music1 = pygame.mixer.Sound(
+        str(ASSETS / "music1.wav")
+    )
 
+    car_woosh = pygame.mixer.Sound(
+        str(ASSETS / "car woosh.wav")
+    )
+
+    buzz = pygame.mixer.Sound(
+        str(ASSETS / "buzzing.wav")
+    )
+
+    item = pygame.mixer.Sound(
+        str(ASSETS / "important item or selection.wav")
+    )
+
+    BC_Buzzing = pygame.mixer.Sound(
+        str(ASSETS / "BC_Buzzing.wav")
+    )
+
+    Enemy = pygame.mixer.Sound(
+        str(ASSETS / "enemy_audio.wav")
+    )
+
+    FONT_FILE = ASSETS / "font.ttf"
+    
     def play_music(self, audio):
-        if audio is not None:
-            audio.play()
-
+        audio.play()
+    
     def stop_music(self, audio):
-        if audio is not None:
-            audio.stop()
+        audio.stop()
 
     def handle_command(self, command):
         command = command.strip()
@@ -259,6 +274,7 @@ class TextAdventure:
         if self.state == "DUL_int":
             if command == "south" or command == "South":
                 self.Table_Room()
+                return
             else:
                 self.write("You can't do that here.")
                 return
@@ -268,7 +284,7 @@ class TextAdventure:
                 self.staircase2()
                 return
             elif command == "south" or command == "South":
-                self.Table_Room()
+                self.Table_Room2()
                 return
             else:
                 self.write("You can't do that here.")
@@ -277,6 +293,7 @@ class TextAdventure:
         if self.state == "staircase2":
             if command == "south" or command == "South":
                 self.Table_Room()
+                return
             elif command == "help" or command == "Help":
                 return
             else:
@@ -294,6 +311,7 @@ class TextAdventure:
         if self.state == "Coffee_Shop_Bait":
             if command == "interact" or command == "Interact" or command == "inspect" or command == "Inspect":
                 self.Golden_Paper()
+                return
             else:
                 self.write("You can't do that here.")
                 return
@@ -345,7 +363,7 @@ class TextAdventure:
 
         if self.state == "Cup_And_Gown_Cafe":
             if command == "interact" or command == "Interact" or command == "inspect" or command == "Inspect":
-                self.writing_center()
+                self.Golden_Paper()
                 return  
             if command == "east" or command == "East":
                 self.outside_Cup_And_Gown_Cafe()
@@ -462,6 +480,9 @@ class TextAdventure:
                 return
             if command == "interact" or command == "Interact" or command == "inspect" or command == "Inspect":
                 True
+            else:
+                self.write("You hit a wall. Can't you see anything?")
+                return
 
         if self.state == "Bishops_Commons_East":
             if command == "west" or command == "West":
@@ -473,6 +494,9 @@ class TextAdventure:
             if command == "south" or command == "South":
                 self.Foosball_Table()
                 return
+            else:
+                self.write("You hit a wall. Can't you see anything?")
+                return
 
         if self.state == "Staircase_Door":
             if command == "south" or command == "South":
@@ -483,6 +507,9 @@ class TextAdventure:
                 return
             if command == "east" or command == "East":
                 self.Glowey_Door()
+                return
+            else:
+                self.write("You hit a wall. Can't you see anything?")
                 return
 
         if self.state == "Staircase3":
@@ -506,25 +533,42 @@ class TextAdventure:
             if command == "south" or command == "south":
                 self.Gold_Wall_1()
                 return
+            else:
+                self.write("You can't do that here.")
+                return
 
         if self.state == "Foosball_Table_Play":
             if command == "back" or command == "Back":
                 self.Foosball_Table()
+                return
+            if command == "help" or command == "Help":
+                self.write("Try the command 'back'.")
+            else:
+                self.write("You can't do that here.")
                 return
 
         if self.state == "Foosball_Table_Interact":
             if command == "interact" or command == "Interact" or command == "inspect" or command == "Inspect":
                 self.Foosball_Table_Interact_2()
                 return
+            else:
+                self.write("You can't do that here.")
+                return
 
         if self.state == "Foosball_Table_Interact_2":
             if command == "take" or command == "Take":
                 self.take_figureine()
                 return
+            else:
+                self.write("You can't do that here.")
+                return
 
         if self.state == "take_figureine":
             if command == "north" or command == "North":
                 self.figureine_door()
+                return
+            else:
+                self.write("You can't do that here.")
                 return
 
         if self.state == "figureine_door":
@@ -533,6 +577,9 @@ class TextAdventure:
                 return
             if command == "east" or command == "East":
                 self.Glowey_Door_Unlocked()
+                return
+            else:
+                self.write("You can't do that here.")
                 return
 
         if self.state == "Glowey_Door_Unlocked":
@@ -575,21 +622,40 @@ class TextAdventure:
         if self.state == "Gold_Wall_1":
             if command == "interact" or command == "Interact" or command == "inspect" or command == "Inspect":
                 self.Gold_Wall_2()
+            else:
+                self.write("You can't do that here.")
+                return
 
         if self.state == "Gold_Wall_2":
             if command == "interact" or command == "Interact" or command == "inspect" or command == "Inspect":
                 self.Gold_Wall_3()
+            else:
+                self.write("You can't do that here.")
+                return
 
         if self.state == "Gold_Wall_3":
             if command == "interact" or command == "Interact" or command == "inspect" or command == "Inspect":
                 self.Gold_Wall_4()
+            else:
+                self.write("You can't do that here.")
+                return
 
         if self.state == "Gold_Wall_4":
             if command == "run" or command == "Run" or command == "RUN":
                 self.Gold_Wall_Stairs()
+            else:
+                self.write("You can't do that here.")
+                return
 
         if self.state == "Gold_Wall_Stairs":
-            True
+            if command == "down" or command == "Down":
+                self.Cemetery_Gold()
+                return
+            elif command == "help" or command == "Help":
+                self.write("Try the command 'down'.")
+                return
+            else:
+                self.write("You can't do that here.")            
                 
     def beginning_p1(self):
         self.write("You're late for class! Why, oh, why have you selected to live in") 
@@ -721,7 +787,7 @@ class TextAdventure:
 
     def Table_Room2(self):
         self.write("It probably goes nowhere anyway. A lit up room is NORTH of you. It smells of expired coffee.")
-        self.write("A break in the wall is NORTHEAST of you. People are talking inside.")
+        self.write("A break in the wall is East of you. People are talking inside.")
         self.write()
         self.state == "Table_Room2"
 
@@ -937,6 +1003,7 @@ class TextAdventure:
         self.state = "Gold_Wall_3"
 
     def Gold_Wall_4(self):
+        self.play_music(self.Enemy)
         self.write("You dart past her, rushing right for the door. She cries and groans for you,")
         self.write("adjusting to follow you. You manage to get to the door. The one that refused")
         self.write("to open. Your hope is briefly heightened before shortening again. You were")
@@ -955,6 +1022,7 @@ class TextAdventure:
         self.game_over = True
 
     def Gold_Wall_Stairs(self):
+        self.stop_music(self.Enemy)
         self.write("You pull forcefully on the door, it opens easily so essentially, you toss")
         self.write("yourself back, your roomate's huge hands graze your spine, just before")
         self.write("you manage to slip through the door. And slam it shut. Manners much?")
@@ -963,6 +1031,16 @@ class TextAdventure:
         self.write("and the rest going down.")
         self.write()
         self.state = "Gold_Wall_Stairs"
+
+    def Cemetery_Gold(self):
+        self.write("You find yourself facing a barricaded gate. You try to push at the doors, they don't budge. No matter how")
+        self.write("hard you push, the doors stay shut. There's another way for certain. You turn around and find yourself in")
+        self.write("the University Cemetary. This must be the end of this strange place. Rows and rows of stones lay ahead of you.")
+        self.write("The cobble shuffling beneath you. You won't look back. Trees stand overhead, bare and looming. Do you remember")
+        self.write(" what brought you here? Names whirl around you, people, family?")
+        self.write()
+        self.state = "Cemetery_Gold"
+        self.game_over = True
 
     def Foosball_Table_Interact(self):
         self.write("You choose to analyze the foosball table. You look really classy,")
@@ -1090,20 +1168,19 @@ class TextAdventure:
         self.write("isolated cemetery, a border of collapsed and misplaced rocks.")
         self.state = "ST_Marks_Cemetery"
 
-    async def run(self):
+    def run(self):
         pygame.init()
         screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("Trails We Want(And The Ones We Take)")
-        font_path = self.ASSETS / "font.ttf"
-        font = pygame.font.Font(str(font_path) if font_path.is_file() else None, 30)
-        self.background_music1 = self.load_sound("music1.wav")
-        self.car_woosh = self.load_sound("car woosh.wav")
-        self.buzz = self.load_sound("buzzing.wav")
-        self.item = self.load_sound("important item or selection.wav")
-        self.BC_Buzzing = self.load_sound("BC_Buzzing")
+        background_color = (255, 255, 255)
+        font = pygame.font.Font(str(self.FONT_FILE), 30)
         clock = pygame.time.Clock()
         command = ""
         running = True
+
+        print("pygame initialized:", pygame.get_init())
+
+        print(self.messages)
 
         self.play_music(self.background_music1)
 
@@ -1131,28 +1208,28 @@ class TextAdventure:
                         elif event.unicode.isprintable():
                             command = (command + event.unicode)[:60]
 
-            screen.fill((30, 34, 42))
+            screen.fill(background_color)
 
             lines = []
             for message in self.messages:
-                lines.extend(wrap_text(message, font, WIDTH - 48))
+                lines.extend(textwrap.wrap(message, width=110) or [""])
             for index, line in enumerate(lines[-17:]):
-                surface = font.render(line, True, (224, 192, 240))
+                surface = font.render(line, True, (128, 0, 128))
                 screen.blit(surface, (24, 20 + index * 30))
 
             if self.game_over:
                 prompt = "Game ended. Refresh to restart; Esc closes the game."
             else:
                 prompt = "> " + command + "_"
-            surface = font.render(prompt, True, (230, 230, 250))
+            surface = font.render(prompt, True, (0, 0, 0))
             screen.blit(surface, (24, HEIGHT - 50))
             pygame.display.flip()
             clock.tick(30)
-            await asyncio.sleep(0)
 
         pygame.quit()
 
 def wrap_text(text, font, max_width):
+
     if not text:
         return [""]
     words = text.split()
@@ -1169,6 +1246,19 @@ def wrap_text(text, font, max_width):
         lines.append(current)
     return lines
 
+def draw_game(screen, font, small_font, game):
+    screen.fill((255, 255, 255))
+    screen.blit(font.render("Trails We Want (And The Ones We Take)", True, (335, 335, 340)), (40, 30))
+    
+    lines = []
 
-if __name__ == "__main__":
-    asyncio.run(TextAdventure().run())
+    y = 80
+    for line in lines:
+        screen.blit(small_font.render(line, True, (320, 320, 325)), (40, y))
+        y += 23
+
+    pygame.draw.line(screen, (150, 150, 160), (40, HEIGHT - 60), (WIDTH - 20, HEIGHT - 60), 2)
+    screen.blit(small_font.render("> ", True, (355, 355, 355)), (50, HEIGHT - 50))
+
+game = TextAdventure()
+game.run()
