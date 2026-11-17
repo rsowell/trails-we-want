@@ -174,6 +174,8 @@ class TextAdventure:
             elif command == "east" or command == "East":
                 self.DuPont_Library_Elevator_Enterance()
                 return
+            elif command == "help" or command == "Help":
+                return
             else:
                 self.write("You can't do that here.")
                 return
@@ -187,6 +189,8 @@ class TextAdventure:
                 return
             elif command == "west" or command == "West":
                 self.DuPont_Library_room2()
+                return
+            elif command == "help" or command == "Help":
                 return
             else:
                 self.write("You can't do that here.")
@@ -202,6 +206,8 @@ class TextAdventure:
             elif command == "interact" or command == "Interact" or command == "inspect" or command == "Inspect": 
                 self.Elevator_Inspect()
                 return
+            elif command == "help" or command == "Help":
+                return
             else:
                 self.write("You can't do that here.")
                 return
@@ -212,6 +218,8 @@ class TextAdventure:
                 return
             elif command == "interact" or command == "Interact" or command == "inspect" or command == "Inspect": 
                 self.DuPont_Library_Stairs_Int()
+                return
+            elif command == "help" or command == "Help":
                 return
             else:
                 self.write("You can't do that here.")
@@ -224,6 +232,8 @@ class TextAdventure:
             elif command == "interact" or command == "Interact" or command == "inspect" or command == "Inspect":
                 self.write("We already know what happens...")
                 return
+            elif command == "help" or command == "Help":
+                return
             else:
                 self.write("You can't do that here.")
                 return
@@ -235,6 +245,8 @@ class TextAdventure:
             elif command == "west" or command == "West":
                 self.DuPont_Library_Elevator_Enterance()
                 return
+            elif command == "help" or command == "Help":
+                return
             else:
                 self.write("You can't do that here.")
                 return
@@ -242,6 +254,8 @@ class TextAdventure:
         if self.state == "DuPont_Library_room1":
             if command == "south" or command == "South":
                 self.DuPont_Library_room2()
+                return
+            elif command == "help" or command == "Help":
                 return
             else:
                 self.write("You can't do that here.")
@@ -252,6 +266,8 @@ class TextAdventure:
                 self.write("The door is locked. You can't go through it.")
                 self.write("There is another door to the East. You can go back North.")
                 self.write()
+                return
+            elif command == "help" or command == "Help":
                 return
             elif command == "east" or command == "East":
                 self.DuPont_Enterance_Left()
@@ -267,6 +283,8 @@ class TextAdventure:
             elif command == "interact" or command == "Interact" or command == "inspect" or command == "Inspect":
                 self.DUL_int()
                 return
+            elif command == "help" or command == "Help":
+                return
             else:
                 self.write("You can't do that here.")
                 return
@@ -275,6 +293,8 @@ class TextAdventure:
             if command == "south" or command == "South":
                 self.Table_Room()
                 return
+            elif command == "help" or command == "Help":
+                return
             else:
                 self.write("You can't do that here.")
                 return
@@ -282,6 +302,8 @@ class TextAdventure:
         if self.state == "room_to_staircase2":
             if command == "interact" or command == "Interact" or command == "inspect" or command == "Inspect":
                 self.staircase2()
+                return
+            elif command == "help" or command == "Help":
                 return
             elif command == "south" or command == "South":
                 self.Table_Room2()
@@ -304,13 +326,20 @@ class TextAdventure:
             if command == "north" or command == "North":
                 self.Coffee_Shop_Bait()
                 return
-            if command == "east" or command == "East":
+            elif command == "east" or command == "East":
                 self.Grand_Room()
+                return
+            elif command == "help" or command == "Help":
+                return
+            else:
+                self.write("You can't do that here.")
                 return
 
         if self.state == "Coffee_Shop_Bait":
             if command == "interact" or command == "Interact" or command == "inspect" or command == "Inspect":
                 self.Golden_Paper()
+                return
+            elif command == "help" or command == "Help":
                 return
             else:
                 self.write("You can't do that here.")
@@ -319,6 +348,8 @@ class TextAdventure:
         if self.state == "Table_Room":
             if command == "west" or command == "West":
                 self.writing_center()
+                return
+            elif command == "help" or command == "Help":
                 return
             elif command == "north" or command == "North":
                 self.room_to_staircase2()
@@ -334,6 +365,8 @@ class TextAdventure:
             if command == "gaze" or command == "Gaze":
                 self.purple_paper()
                 return
+            elif command == "help" or command == "Help":
+                return
             else:
                 self.write("Gaze. No other option.")
                 return
@@ -341,6 +374,9 @@ class TextAdventure:
         if self.state == "purple_paper":
             if command == "north" or command == "North":
                 self.room_to_staircase2()
+                return
+            elif command == "help" or command == "Help":
+                    return
             else:
                 self.write("You can't do that here.")
                 return
@@ -348,6 +384,8 @@ class TextAdventure:
         if self.state == "writing_center":
             if command == "west" or command == "West":
                 self.outside_Cup_And_Gown_Cafe()
+                return
+            elif command == "help" or command == "Help":
                 return
             else:
                 self.write("You can't do that here.")
@@ -357,6 +395,8 @@ class TextAdventure:
             if command == "south" or command == "South":
                 self.Cup_And_Gown_Cafe()
                 return
+            elif command == "help" or command == "Help":
+                return
             else:
                 self.write("You can't do that here.")
                 return
@@ -364,7 +404,9 @@ class TextAdventure:
         if self.state == "Cup_And_Gown_Cafe":
             if command == "interact" or command == "Interact" or command == "inspect" or command == "Inspect":
                 self.Golden_Paper()
-                return  
+                return 
+            elif command == "help" or command == "Help":
+                return 
             if command == "east" or command == "East":
                 self.outside_Cup_And_Gown_Cafe()
                 return
@@ -387,6 +429,8 @@ class TextAdventure:
             if command == "interact" or command == "Interact" or command == "inspect" or command == "Inspect":
                 self.Facti()
                 return
+            elif command == "help" or command == "Help":
+                return
             else:
                 self.write("You can't do that here.")
                 return
@@ -394,6 +438,8 @@ class TextAdventure:
         if self.state == "Facti":
             if command == "north" or command == "North":
                 self.Facti_Leave()
+                return
+            elif command == "help" or command == "Help":
                 return
             else:
                 self.write("You can't do that here.")
@@ -427,8 +473,10 @@ class TextAdventure:
             if command == "west" or command == "West":
                 self.Bishops_Commons_West()
                 return
-            if command == "east" or command == "East":
+            elif command == "east" or command == "East":
                 self.Bishops_Commons_East()
+                return
+            elif command == "help" or command == "Help":
                 return
             else:
                 self.write("You can't do that here.")
@@ -438,6 +486,8 @@ class TextAdventure:
             if command == "interact" or command == "Interact" or command == "inspect" or command == "Inspect":
                 self.door_to_Bishops_Commons_inspect()
                 return
+            elif command == "help" or command == "Help":
+                return
             else:
                 self.write("You can't do that here.")
                 return
@@ -445,6 +495,8 @@ class TextAdventure:
         if self.state == "door_to_Bishops_Commons_inspect":
             if command == "enter" or command == "Enter":
                 self.Bishops_Commons()
+                return
+            elif command == "help" or command == "Help":
                 return
             else:
                 self.write("You can't do that here.")
@@ -456,6 +508,8 @@ class TextAdventure:
                 return
             if command == "east" or command == "East":
                 self.Bishops_Commons_East()
+                return
+            elif command == "help" or command == "Help":
                 return
             if command == "skip":
                 self.write()
@@ -478,8 +532,11 @@ class TextAdventure:
             if command == "east" or command == "East":
                 self.Bishops_Commons()
                 return
+            elif command == "help" or command == "Help":
+                return
             if command == "interact" or command == "Interact" or command == "inspect" or command == "Inspect":
-                True
+                self.Bishops_Commons_West_Door()
+                return
             else:
                 self.write("You hit a wall. Can't you see anything?")
                 return
@@ -493,6 +550,8 @@ class TextAdventure:
                 return
             if command == "south" or command == "South":
                 self.Foosball_Table()
+                return
+            elif command == "help" or command == "Help":
                 return
             else:
                 self.write("You hit a wall. Can't you see anything?")
@@ -508,6 +567,8 @@ class TextAdventure:
             if command == "east" or command == "East":
                 self.Glowey_Door()
                 return
+            elif command == "help" or command == "Help":
+                return
             else:
                 self.write("You hit a wall. Can't you see anything?")
                 return
@@ -518,6 +579,8 @@ class TextAdventure:
                 return
             if command == "south" or command == "North":
                 self.Staircase_Door()
+                return
+            elif command == "help" or command == "Help":
                 return
             else:
                 self.write("You can't do that here.")
@@ -533,6 +596,8 @@ class TextAdventure:
             if command == "south" or command == "south":
                 self.Gold_Wall_1()
                 return
+            elif command == "help" or command == "Help":
+                return
             else:
                 self.write("You can't do that here.")
                 return
@@ -543,6 +608,8 @@ class TextAdventure:
                 return
             if command == "help" or command == "Help":
                 self.write("Try the command 'back'.")
+                self.write()
+                return
             else:
                 self.write("You can't do that here.")
                 return
@@ -551,13 +618,17 @@ class TextAdventure:
             if command == "interact" or command == "Interact" or command == "inspect" or command == "Inspect":
                 self.Foosball_Table_Interact_2()
                 return
+            elif command == "help" or command == "Help":
+                return
             else:
                 self.write("You can't do that here.")
                 return
 
         if self.state == "Foosball_Table_Interact_2":
-            if command == "take" or command == "Take":
+            if command == "collect" or command == "Collect":
                 self.take_figureine()
+                return
+            elif command == "help" or command == "Help":
                 return
             else:
                 self.write("You can't do that here.")
@@ -566,6 +637,8 @@ class TextAdventure:
         if self.state == "take_figureine":
             if command == "north" or command == "North":
                 self.figureine_door()
+                return
+            elif command == "help" or command == "Help":
                 return
             else:
                 self.write("You can't do that here.")
@@ -577,6 +650,8 @@ class TextAdventure:
                 return
             if command == "east" or command == "East":
                 self.Glowey_Door_Unlocked()
+                return
+            elif command == "help" or command == "Help":
                 return
             else:
                 self.write("You can't do that here.")
@@ -590,6 +665,8 @@ class TextAdventure:
                 return
             if command == "east" or command == "East":
                 self.GDK_East()
+                return
+            elif command == "help" or command == "Help":
                 return
             else:
                 self.write("You can't do that here.")
@@ -605,9 +682,13 @@ class TextAdventure:
                 if command == "paper" or command == "Paper":
                     self.Purple_Paper()
                     return
+                elif command == "help" or command == "Help":
+                    return
                 else:
                     self.write("You can't do that here.")
                     return
+            elif command == "help" or command == "Help":
+                return
             else:
                 self.write("You can't do that here.")
                 return
@@ -615,6 +696,9 @@ class TextAdventure:
         if self.state == "GDK_East":
             if command == "interact" or command == "Interact" or command == "inspect" or command == "Inspect":
                 self.GDK_East_Interact()
+                return
+            elif command == "help" or command == "Help":
+                return
             else:
                 self.write("You can't do that here.")
                 return
@@ -622,6 +706,9 @@ class TextAdventure:
         if self.state == "Gold_Wall_1":
             if command == "interact" or command == "Interact" or command == "inspect" or command == "Inspect":
                 self.Gold_Wall_2()
+                return
+            elif command == "help" or command == "Help":
+                return
             else:
                 self.write("You can't do that here.")
                 return
@@ -629,6 +716,9 @@ class TextAdventure:
         if self.state == "Gold_Wall_2":
             if command == "interact" or command == "Interact" or command == "inspect" or command == "Inspect":
                 self.Gold_Wall_3()
+                return
+            elif command == "help" or command == "Help":
+                return
             else:
                 self.write("You can't do that here.")
                 return
@@ -636,6 +726,9 @@ class TextAdventure:
         if self.state == "Gold_Wall_3":
             if command == "interact" or command == "Interact" or command == "inspect" or command == "Inspect":
                 self.Gold_Wall_4()
+                return
+            elif command == "help" or command == "Help":
+                return
             else:
                 self.write("You can't do that here.")
                 return
@@ -643,6 +736,9 @@ class TextAdventure:
         if self.state == "Gold_Wall_4":
             if command == "run" or command == "Run" or command == "RUN":
                 self.Gold_Wall_Stairs()
+                return
+            elif command == "help" or command == "Help":
+                return
             else:
                 self.write("You can't do that here.")
                 return
@@ -954,7 +1050,9 @@ class TextAdventure:
         self.state = "Bishops_Commons_West"
 
     def Bishops_Commons_West_Door(self):
-        self.write("")
+        self.write("This door does not budge. Maybe you should stop trying to open doors.")
+        self.write()
+        self.state = "Bishops_Commons_West_Door"
 
     def Bishops_Commons_West2(self):
         self.write("Stepping back, you see two hallways west and east of you. Along the walls are")
@@ -1054,7 +1152,7 @@ class TextAdventure:
         self.write("to their standing positions. You're just about to stop, when one of the")
         self.write("players... weigh differently. It falls as you try to turn it upright.")
         self.write()
-        self.write = "Foosball_Table_Interact_2"
+        self.state = "Foosball_Table_Interact_2"
 
     def take_figureine(self):
         self.write("You take the figurine. You turn it around in your hand and find what")
