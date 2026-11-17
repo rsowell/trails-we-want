@@ -577,7 +577,7 @@ class TextAdventure:
             if command == "north" or command == "North":
                 self.Staircase_Death_Ending()
                 return
-            if command == "south" or command == "North":
+            if command == "south" or command == "South":
                 self.Staircase_Door()
                 return
             elif command == "help" or command == "Help":
