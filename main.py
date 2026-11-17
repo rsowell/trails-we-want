@@ -1168,7 +1168,7 @@ class TextAdventure:
         self.write("isolated cemetery, a border of collapsed and misplaced rocks.")
         self.state = "ST_Marks_Cemetery"
 
-    def run(self):
+    async def run(self):
         pygame.init()
         screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("Trails We Want(And The Ones We Take)")
@@ -1224,6 +1224,7 @@ class TextAdventure:
             surface = font.render(prompt, True, (0, 0, 0))
             screen.blit(surface, (24, HEIGHT - 50))
             pygame.display.flip()
+            await asyncio.sleep(0)
             clock.tick(30)
 
         pygame.quit()
@@ -1260,5 +1261,19 @@ def draw_game(screen, font, small_font, game):
     pygame.draw.line(screen, (150, 150, 160), (40, HEIGHT - 60), (WIDTH - 20, HEIGHT - 60), 2)
     screen.blit(small_font.render("> ", True, (355, 355, 355)), (50, HEIGHT - 50))
 
+import asyncio
+
 game = TextAdventure()
-game.run()
+
+async def main():
+    game.setup()
+
+    while game.running:
+        game.handle_events()
+        game.update()
+        game.draw()
+
+        pygame.display.update()
+        await asyncio.sleep(0)
+
+asyncio.run(main())
